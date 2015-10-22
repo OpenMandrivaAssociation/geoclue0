@@ -6,7 +6,7 @@
 
 Name:		geoclue0
 Version:	0.12.99
-Release:	3
+Release:	4
 Summary:	A modular geoinformation service
 Group:		Geography
 License:	LGPLv2
@@ -19,7 +19,7 @@ BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gobject-2.0)
 BuildRequires:	pkgconfig(gtk+-2.0)
 BuildRequires:	pkgconfig(gypsy) >= 0.7.1
-BuildRequires:	pkgconfig(libgps) >= 2.91
+BuildRequires:	pkgconfig(libgps) >= 3.15
 BuildRequires:	pkgconfig(libnm-glib)
 BuildRequires:	pkgconfig(libnm-glib-vpn)
 BuildRequires:	pkgconfig(libnm-util)
