@@ -26,6 +26,7 @@ BuildRequires:	pkgconfig(libnm-util)
 BuildRequires:	pkgconfig(libsoup-gnome-2.4)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	xsltproc
+BuildRequires:	gtk-doc
 Requires:	dbus
 Obsoletes:	geoclue0-gpsd
 %description
