@@ -6,7 +6,7 @@
 
 Name:		geoclue0
 Version:	0.12.99
-Release:	4
+Release:	5
 Summary:	A modular geoinformation service
 Group:		Geography
 License:	LGPLv2
@@ -27,7 +27,7 @@ BuildRequires:	pkgconfig(libsoup-gnome-2.4)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	xsltproc
 Requires:	dbus
-
+Obsoletes:	geoclue0-gpsd
 %description
 Geoclue is a modular geoinformation service built on top of the D-Bus
 messaging system. The goal of the Geoclue project is to make creating
@@ -143,23 +143,6 @@ A gypsy provider for geoclue
 
 #--------------------------------------------------------------------
 
-%package gpsd
-Summary: gpsd provider for geoclue
-Group: Geography
-Conflicts: geoclue < 0.12.99-2
-Requires: %{name} = %{version}-%{release}
-Obsoletes: %{oname}-gpsd < 0.12.99-4
-
-%description gpsd
-A gpsd provider for geoclue
-
-%files gpsd
-%{_libexecdir}/geoclue-gpsd
-%{_datadir}/geoclue-providers/geoclue-gpsd.provider
-%{_datadir}/dbus-1/services/org.freedesktop.Geoclue.Providers.Gpsd.service
-
-#--------------------------------------------------------------------
-
 %package gsmloc
 Summary: gsmloc provider for geoclue
 Group: Geography
@@ -181,7 +164,7 @@ A gsmloc provider for geoclue
 %apply_patches
 
 %build
-%configure --disable-static
+%configure --disable-static --disable-gpsd
 %make
 
 %install
