@@ -162,7 +162,7 @@ A gsmloc provider for geoclue
 
 %prep
 %setup -q -n %{oname}-%{version}
-%apply_patches
+%autopatch -p1
 
 %build
 %configure --disable-static --disable-gpsd
