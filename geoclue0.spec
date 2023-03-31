@@ -6,7 +6,7 @@
 
 Name:		geoclue0
 Version:	0.12.99
-Release:	8
+Release:	9
 Summary:	A modular geoinformation service
 Group:		Geography
 License:	LGPLv2
