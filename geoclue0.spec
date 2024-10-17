@@ -10,7 +10,7 @@ Release:	9
 Summary:	A modular geoinformation service
 Group:		Geography
 License:	LGPLv2
-URL:		http://geoclue.freedesktop.org/
+URL:		https://geoclue.freedesktop.org/
 Source0:	http://freedesktop.org/~hadess/%{oname}-%{version}.tar.gz
 Patch0:		geoclue-0.12.0-gps.patch
 BuildRequires:	pkgconfig(dbus-glib-1) >= 0.86
