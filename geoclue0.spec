@@ -13,6 +13,11 @@ License:	LGPLv2
 URL:		https://geoclue.freedesktop.org/
 Source0:	http://freedesktop.org/~hadess/%{oname}-%{version}.tar.gz
 Patch0:		geoclue-0.12.0-gps.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	pkgconfig(dbus-glib-1) >= 0.86
 BuildRequires:	pkgconfig(gio-2.0) >= 2.25.7
 BuildRequires:	pkgconfig(glib-2.0)
