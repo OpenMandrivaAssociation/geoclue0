@@ -35,8 +35,7 @@
  		g_set_error (error, GEOCLUE_ERROR,
  		             GEOCLUE_ERROR_NOT_AVAILABLE,
 -		             "xmlNanoHTTPMethod did not get a response from %s\n", url);
-+		             "Could not create an HTTP request for %s
-+", url);
++		             "Could not create an HTTP request for %s", url);
  		return FALSE;
  	}
 -	
@@ -57,8 +56,7 @@
 +	if (msg->status_code == SOUP_STATUS_NONE || body == NULL || body->data == NULL) {
 +		g_set_error (error, GEOCLUE_ERROR,
 +		             GEOCLUE_ERROR_NOT_AVAILABLE,
-+		             "HTTP request did not get a response from %s
-+", url);
++		             "HTTP request did not get a response from %s", url);
 +		g_object_unref (msg);
 +		g_object_unref (session);
 +		return FALSE;
