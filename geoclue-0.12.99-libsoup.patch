@@ -9,7 +9,7 @@
  #include <libxml/xpathInternals.h>
  #include <libxml/uri.h>      /* for xmlURIEscapeStr */
  
-@@ -178,42 +178,40 @@
+@@ -178,42 +178,38 @@
  static gboolean
  gc_web_service_fetch (GcWebService *self, gchar *url, GError **error)
  {
