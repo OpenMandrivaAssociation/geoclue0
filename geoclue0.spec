@@ -17,6 +17,7 @@ License:	LGPLv2
 URL:		https://geoclue.freedesktop.org/
 Source0:	http://freedesktop.org/~hadess/%{oname}-%{version}.tar.gz
 Patch0:		geoclue-0.12.0-gps.patch
+Patch1:		geoclue-0.12.99-libsoup.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool-base
@@ -174,6 +175,9 @@ A gsmloc provider for geoclue
 %autopatch -p1
 
 %build
+# libxml2 2.15 removed nanoHTTP. The web helper uses libsoup 2.4 instead.
+export CFLAGS="$CFLAGS $(pkg-config --cflags libsoup-gnome-2.4)"
+export LIBS="$(pkg-config --libs libsoup-gnome-2.4) ${LIBS:-}"
 %configure --disable-static --disable-gpsd
 %make LIBTOOL=slibtool-shared
 

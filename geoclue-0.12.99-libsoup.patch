@@ -1,0 +1,77 @@
+--- a/geoclue/gc-web-service.c
++++ b/geoclue/gc-web-service.c
+@@ -81,7 +81,7 @@
+ #include <stdarg.h>
+ #include <glib-object.h>
+ 
+-#include <libxml/nanohttp.h>
++#include <libsoup/soup.h>
+ #include <libxml/xpathInternals.h>
+ #include <libxml/uri.h>      /* for xmlURIEscapeStr */
+ 
+@@ -178,42 +178,40 @@
+ static gboolean
+ gc_web_service_fetch (GcWebService *self, gchar *url, GError **error)
+ {
+-	void* ctxt = NULL;
+-	gint len;
+-	xmlChar buf[1024];
+-	xmlBuffer *output;
++	SoupSession *session;
++	SoupMessage *msg;
++	const SoupMessageBody *body;
+ 	
+ 	g_assert (url);
+ 	
+ 	gc_web_service_reset (self);
+ 	
+-	xmlNanoHTTPInit();
+-	ctxt = xmlNanoHTTPMethod (url, "GET", NULL, NULL, NULL, 0);
+-	if (!ctxt) {
++	session = soup_session_sync_new ();
++	msg = soup_message_new (SOUP_METHOD_GET, url);
++	if (!msg) {
++		g_object_unref (session);
+ 		g_set_error (error, GEOCLUE_ERROR,
+ 		             GEOCLUE_ERROR_NOT_AVAILABLE,
+-		             "xmlNanoHTTPMethod did not get a response from %s\n", url);
++		             "Could not create an HTTP request for %s
++", url);
+ 		return FALSE;
+ 	}
+-	
+-	output = xmlBufferCreate ();
+-	while ((len = xmlNanoHTTPRead (ctxt, buf, sizeof(buf))) > 0) {
+-		if (xmlBufferAdd (output, buf, len) != 0) {
+-			xmlNanoHTTPClose(ctxt);
+-			xmlBufferFree (output);
+-			
+-			g_set_error_literal (error, GEOCLUE_ERROR,
+-			                     GEOCLUE_ERROR_FAILED,
+-			                     "libxml error (xmlBufferAdd failed)");
+-			
+-			return FALSE;
+-		}
++	soup_session_send_message (session, msg);
++	body = msg->response_body;
++	if (msg->status_code == SOUP_STATUS_NONE || body == NULL || body->data == NULL) {
++		g_set_error (error, GEOCLUE_ERROR,
++		             GEOCLUE_ERROR_NOT_AVAILABLE,
++		             "HTTP request did not get a response from %s
++", url);
++		g_object_unref (msg);
++		g_object_unref (session);
++		return FALSE;
+ 	}
+-	xmlNanoHTTPClose(ctxt);
++	self->response_length = (gint) body->length;
++	self->response = g_memdup (body->data, (guint) self->response_length);
++	g_object_unref (msg);
++	g_object_unref (session);
+ 	
+-	self->response_length = xmlBufferLength (output);
+-	self->response = g_memdup (xmlBufferContent (output), self->response_length);
+-	xmlBufferFree (output);
+ 	
+ 	return TRUE;
+ }
