@@ -175,10 +175,10 @@ A gsmloc provider for geoclue
 
 %build
 %configure --disable-static --disable-gpsd
-%make
+%make LIBTOOL=slibtool-shared
 
 %install
-%makeinstall_std
+%makeinstall_std LIBTOOL=slibtool-shared
 
 #Remove libtool archives.
 find %{buildroot} -name '*.la' -delete
