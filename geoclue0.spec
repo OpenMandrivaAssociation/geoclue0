@@ -1,3 +1,7 @@
+# The LTO configure workaround rewrites this ancient libtool script into a
+# command that starts with -e, so the shared library is never produced.
+%global _disable_lto 1
+
 %define oname	geoclue
 
 %define geoclue_major 0
